@@ -1,0 +1,7 @@
+target/*
+.idea/*
+*.iml
+.gradle/*
+build/*
+application/build
+library/build
