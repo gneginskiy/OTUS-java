@@ -6,7 +6,7 @@ import org.sampletestframework.annotation.Assertions;
 import org.sampletestframework.annotation.BeforeAll;
 import org.sampletestframework.annotation.Test;
 
-public class SampleTest {
+public class CalculatorTest {
     Calculator calculator;
 
     @BeforeAll
