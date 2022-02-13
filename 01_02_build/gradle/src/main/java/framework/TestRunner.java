@@ -8,27 +8,31 @@ import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class TestRunner {
+
     public static void main(String[] args) {
         String path = null;//args[0];
         getClassesFromPath(path).forEach(TestRunner::processTestForClass);
     }
 
     private static void processTestForClass(Class aClass) {
-        Object instance = createInstance(aClass);
         List<Method> declaredMethods = Arrays.asList(aClass.getDeclaredMethods());
-        runMethodWithAnnotation(instance, declaredMethods, BeforeAll.class);
 
-        declaredMethods.stream()
+        declaredMethods
+                .parallelStream()
                 .filter(TestRunner::isTestCase)
                 .sorted(Comparator.comparing(Method::getName))
                 .forEach(method -> {
+                    Object instance = createInstance(aClass);
+                    runMethodWithAnnotation(instance, declaredMethods, BeforeAll.class);
                     runMethodWithAnnotation(instance, declaredMethods, BeforeEach.class);
                     runTestCase(instance, method);
                     runMethodWithAnnotation(instance, declaredMethods, AfterEach.class);
+                    runMethodWithAnnotation(instance, declaredMethods, AfterAll.class);
                 });
-        runMethodWithAnnotation(instance, declaredMethods, AfterAll.class);
     }
 
     private static void runTestCase(Object instance, Method method) {

@@ -11,7 +11,7 @@ public class SampleTest {
     @BeforeAll
     public void setUp() {
         calculator = new Calculator();
-        System.out.println("BeforeAll teardown called");
+        System.err.println("BeforeAll teardown called");
     }
 
     @Test
@@ -42,7 +42,7 @@ public class SampleTest {
     @AfterAll
     public void tearDown() {
         calculator = null; //not needed
-        System.out.println("afterAll teardown called");
+        System.err.println("afterAll teardown called");
     }
 
 }
