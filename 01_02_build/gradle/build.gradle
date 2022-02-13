@@ -1,7 +1,8 @@
 plugins {
     id 'org.springframework.boot' version '2.5.2'
-//    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'java'
+    id 'maven-publish'
 }
 
 group 'org.example'
@@ -16,6 +17,22 @@ dependencies {
     implementation project(path: ':library')
     implementation project(path: ':application')
 }
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId = 'org.gn'
+            artifactId = 'sampletestframework'
+            version = '1.1'
+
+            from components.java
+        }
+    }
+    repositories {
+        mavenLocal();
+    }
+}
+
 
 test {
     useJUnitPlatform()
