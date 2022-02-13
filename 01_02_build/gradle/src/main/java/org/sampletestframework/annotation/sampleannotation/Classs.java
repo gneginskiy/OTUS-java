@@ -1,4 +1,4 @@
-package framework.annotation.sampleannotation;
+package org.sampletestframework.annotation.sampleannotation;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

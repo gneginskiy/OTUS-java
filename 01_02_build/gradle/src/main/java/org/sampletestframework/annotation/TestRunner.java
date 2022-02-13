@@ -1,21 +1,17 @@
-package framework;
-
-import framework.annotation.*;
-import samples.SampleTest;
+package org.sampletestframework.annotation;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.Objects;
 
 public class TestRunner {
 
-    public static void main(String[] args) {
-        String path = null;//args[0];
-        getClassesFromPath(path).forEach(TestRunner::processTestForClass);
+    public static void main(String... args) {
+        String paths = args[0];
+        getClassesFromPath(paths).forEach(TestRunner::processTestForClass);
     }
 
     private static void processTestForClass(Class aClass) {
@@ -92,8 +88,19 @@ public class TestRunner {
         return null;
     }
 
-    private static List<Class> getClassesFromPath(String path) {
-        return Arrays.asList(SampleTest.class);
+    private static List<? extends Class<?>> getClassesFromPath(String path) {
+        return Arrays.stream(path.split(";"))
+                .map(TestRunner::getaClass)
+                .filter(Objects::nonNull)
+                .toList();
+    }
+
+    private static Class<?> getaClass(String a)  {
+        try {
+            return Class.forName(a);
+        } catch (ClassNotFoundException e) {
+            return null;
+        }
     }
 
     public static <E extends Throwable> void sneakyThrow(Throwable e) throws E {

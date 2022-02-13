@@ -1,4 +1,4 @@
-package framework;
+package org.sampletestframework.annotation;
 
 import java.util.Objects;
 

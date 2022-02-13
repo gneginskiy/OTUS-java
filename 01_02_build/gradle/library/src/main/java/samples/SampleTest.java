@@ -1,9 +1,10 @@
 package samples;
 
-import framework.annotation.AfterAll;
-import framework.annotation.BeforeAll;
-import framework.annotation.Test;
-import framework.Assertions;
+
+import org.sampletestframework.annotation.AfterAll;
+import org.sampletestframework.annotation.Assertions;
+import org.sampletestframework.annotation.BeforeAll;
+import org.sampletestframework.annotation.Test;
 
 public class SampleTest {
     Calculator calculator;

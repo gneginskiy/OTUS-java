@@ -1,3 +1,6 @@
+import java.nio.file.Files
+import java.nio.file.Paths
+
 plugins {
     id 'java'
     id 'maven-publish'
@@ -6,13 +9,23 @@ plugins {
 group 'org.example'
 version '1.0-SNAPSHOT'
 repositories {
-    mavenCentral()
+    mavenLocal()
 }
 
 dependencies {
+    implementation 'org.gn:sampletestframework:1.1'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.2'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.2'
 }
+
+task runWithJavaExec(type: JavaExec) {
+    group = "Execution"
+    description = "Run the main class with JavaExecTask"
+    classpath = sourceSets.main.runtimeClasspath
+    setMain("org.sampletestframework.annotation.TestRunner")
+    setArgs(Arrays.asList("samples.SampleTest"))
+}
+
 
 test {
     useJUnitPlatform()
