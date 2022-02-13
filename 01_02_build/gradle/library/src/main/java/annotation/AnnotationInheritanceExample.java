@@ -4,12 +4,11 @@ import java.lang.annotation.*;
 import java.util.Arrays;
 
 public class AnnotationInheritanceExample {
-
     public static void main(String[] args) {
-        //2 annotations
-        System.out.println(Arrays.toString(new A().getClass().getAnnotations()));
-        //only 1 annotation
-        System.out.println(Arrays.toString(new B().getClass().getAnnotations()));
+        Class<? extends A> aClass = new A().getClass();
+        Class<? extends B> bClass = new B().getClass();
+        System.out.println(aClass+" "+Arrays.toString(aClass.getAnnotations()));
+        System.out.println(bClass+""+Arrays.toString(bClass.getAnnotations()));
     }
 
     @InheritedAnnotation
@@ -18,7 +17,6 @@ public class AnnotationInheritanceExample {
     }
 
     static class B extends A{
-
     }
 
     @Inherited
