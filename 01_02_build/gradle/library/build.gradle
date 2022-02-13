@@ -16,7 +16,8 @@ repositories {
 dependencies {
     implementation 'org.gn:sampletestframework:1.1'
     implementation 'net.bramp.unsafe:unsafe-helper:1.0'
-    implementation 'net.bytebuddy:byte-buddy:1.11.20'
+    implementation 'net.bytebuddy:byte-buddy:1.12.8'
+    implementation 'net.bytebuddy:byte-buddy-agent:1.12.8'
 }
 
 task customTest(type: JavaExec) {
