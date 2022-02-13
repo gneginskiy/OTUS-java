@@ -5,3 +5,10 @@ target/*
 build/*
 application/build
 library/build
+out/
+/out/
+/build/
+/.gradle/
+/.idea/
+
+/application/out/
