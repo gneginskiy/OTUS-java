@@ -10,13 +10,16 @@ group 'org.example'
 version '1.0-SNAPSHOT'
 repositories {
     mavenLocal()
+    mavenCentral()
 }
 
 dependencies {
     implementation 'org.gn:sampletestframework:1.1'
+    implementation 'net.bramp.unsafe:unsafe-helper:1.0'
+    implementation 'net.bytebuddy:byte-buddy:1.11.20'
 }
 
-task runWithJavaExec(type: JavaExec) {
+task customTest(type: JavaExec) {
     group = "Execution"
     description = "Run the main class with JavaExecTask"
     classpath = sourceSets.test.runtimeClasspath
@@ -26,5 +29,5 @@ task runWithJavaExec(type: JavaExec) {
 
 
 test {
-    useJUnitPlatform()
+    dependsOn(customTest)
 }
