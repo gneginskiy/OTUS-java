@@ -13,18 +13,15 @@ public class UnsafeCustomList<T> implements CustomList<T> {
     private int size;
 
     public static void main(String[] args) {
-        measure(() -> {
-            List<Object> list = new ArrayList<>();
-            for (int i = 0; i < SAMPLE_SIZE; i++) {
-                list.add("objasdasdfasdfsadfsafsdafj2" + i);
-            }
-            for (int i = 0; i < SAMPLE_SIZE; i++) {
-                list.get(i);
-            }
-        },"safe");
+        measure(getSafeRunnable(),"safe");
         tryToGc();
 
-        measure(() -> {
+        measure(getUnsafeRunnable(),"Unsafe");
+        tryToGc();
+    }
+
+    private static Runnable getUnsafeRunnable() {
+        return () -> {
             UnsafeCustomList<Object> list = new UnsafeCustomList<>();
             for (int i = 0; i < SAMPLE_SIZE; i++) {
                 list.add("objasdasdfasdfsadfsafsdafja" + i);
@@ -32,13 +29,24 @@ public class UnsafeCustomList<T> implements CustomList<T> {
             for (int i = 0; i < SAMPLE_SIZE; i++) {
                 list.get(i);
             }
-        },"Unsafe");
-        tryToGc();
+        };
+    }
+
+    private static Runnable getSafeRunnable() {
+        return () -> {
+            List<Object> list = new ArrayList<>();
+            for (int i = 0; i < SAMPLE_SIZE; i++) {
+                list.add("objasdasdfasdfsadfsafsdafj2" + i);
+            }
+            for (int i = 0; i < SAMPLE_SIZE; i++) {
+                list.get(i);
+            }
+        };
     }
 
     private static void tryToGc() {
-        System.gc();
-        sleep(SLEEP);
+//        System.gc();
+//        sleep(SLEEP);
         System.out.println("freeMemory = " + Runtime.getRuntime().freeMemory());
     }
 

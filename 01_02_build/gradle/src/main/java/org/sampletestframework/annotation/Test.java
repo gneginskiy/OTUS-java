@@ -5,5 +5,5 @@ import java.lang.annotation.RetentionPolicy;
 
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Test {
-    String shouldThrow() default "";
+    Class<?> shouldThrow() default Object.class;
 }

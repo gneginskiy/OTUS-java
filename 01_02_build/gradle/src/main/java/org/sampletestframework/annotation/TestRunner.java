@@ -20,7 +20,6 @@ public class TestRunner {
         declaredMethods
                 .parallelStream()
                 .filter(TestRunner::isTestCase)
-                .sorted(Comparator.comparing(Method::getName))
                 .forEach(method -> {
                     Object instance = createInstance(aClass);
                     runMethodWithAnnotation(instance, declaredMethods, BeforeAll.class);
@@ -33,18 +32,19 @@ public class TestRunner {
 
     private static void runTestCase(Object instance, Method method) {
         boolean isSuccess = true;
-        String expectedExceptionSimpleName = method.getAnnotation(Test.class).shouldThrow();
+        String expectedException = method.getAnnotation(Test.class).shouldThrow().getSimpleName();
+        expectedException = expectedException.equals("Object") ? "" : expectedException;
         String actualExceptionName = "";
         try {
             runMethod(instance, method);
         } catch (Throwable e) {
             actualExceptionName = e.getClass().getSimpleName();
-            if (!actualExceptionName.equals(expectedExceptionSimpleName)) {
+            if (!actualExceptionName.equals(expectedException)) {
                 isSuccess = false;
                 e.printStackTrace();
             }
         }
-        if (!actualExceptionName.equals(expectedExceptionSimpleName)) {
+        if (!actualExceptionName.equals(expectedException)) {
             isSuccess = false;
         }
         System.out.println(
@@ -95,7 +95,7 @@ public class TestRunner {
                 .toList();
     }
 
-    private static Class<?> getaClass(String a)  {
+    private static Class<?> getaClass(String a) {
         try {
             return Class.forName(a);
         } catch (ClassNotFoundException e) {

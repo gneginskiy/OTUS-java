@@ -17,27 +17,32 @@ public class CalculatorTest {
 
     @Test
     public void testSum() {
+        System.out.println(this.hashCode());
         Assertions.assertEquals(4, calculator.sum(2, 2));
     }
 
     @Test
     public void testSubtract() {
+        System.out.println(this.hashCode());
         Assertions.assertEquals(4, calculator.subtract(6, 2));
     }
 
     @Test
     public void testMultiply() {
+        System.out.println(this.hashCode());
         Assertions.assertEquals(4, calculator.multiply(2, 2));
     }
 
     @Test
     public void testDivide1() {
+        System.out.println(this.hashCode());
         Assertions.assertEquals(4, calculator.divide(8, 2));
     }
 
-    @Test(shouldThrow = "ArithmeticException")
+    @Test(shouldThrow = ArithmeticException.class)
     public void testDivide2() {
-         calculator.divide(8, 0);
+        System.out.println(this.hashCode());
+        calculator.divide(8, 0);
     }
 
     @AfterAll
